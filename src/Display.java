@@ -12,17 +12,22 @@ public class Display {
         this.input = input;
     }
 
+    // Prints out the board
+    // Prints out previous guesses and remaining attempts
     public void print() {
         printGuesses();
         printBlanks();
         clear();
     }
 
+    // Clears the terminal
     public void clear() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
 
+    // Prompts user to type in a guess from the terminal
+    // Will only take in words of an appropriate length
     public String promptGuess() {
         while (true) {
             System.out.println("Enter a word:");
@@ -36,6 +41,8 @@ public class Display {
         }
     }
 
+    // Prints out previous guesses on the board with appropriate feedback
+    // Prints out characters of the guesses seperated by "|"
     public void printGuesses() {
 
         StringBuilder b = new StringBuilder();
@@ -44,8 +51,11 @@ public class Display {
             for (int i = 0; i < s.length(); i++) {
                 String answer = board.getWord();
                 char c = s.charAt(i);
+
+                // letter is in correct place
                 if (answer.charAt(i) == c) {
                     b.append(ANSI_GREEN + c + ANSI_RESET);
+                // letter is contained in answer
                 } else if (answer.contains(Character.toString(c))) {
                     b.append(ANSI_YELLOW + c + ANSI_RESET);
                 } else {
@@ -60,6 +70,7 @@ public class Display {
         }
     }
 
+    // prints out spaces for remaining attempts
     public void printBlanks() {
         StringBuilder b = new StringBuilder();
         for (int i = 0; i < board.getAttemptsRemaining(); i++) {
